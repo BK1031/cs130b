@@ -32,40 +32,44 @@ Output a single integer representing the minimum sum possible by replacing the 0
 valid Magic Checkerboard. Output -1 if it is not possible to replace the 0 cells to meet the constraints of a Magic Checkerboard.
 """
 
-def fill_magic_checkerboard(n, m, board):
-    # Function to check if a value is valid for a cell
-    def is_valid_value(val, i, j):
-        if i > 0 and j > 0:
-            return val % 2 != board[i-1][j] % 2 and val % 2 != board[i][j-1] % 2
+def is_valid(board, i, j, value):
+    if any(board[i][col] == value for col in range(len(board[0]))):
+        return False
+
+    if any(board[row][j] == value for row in range(len(board))):
+        return False
+
+    neighbors = [(i-1, j-1), (i-1, j+1), (i+1, j-1), (i+1, j+1)]
+    for row, col in neighbors:
+        if 0 <= row < len(board) and 0 <= col < len(board[0]):
+            if board[row][col] != 0 and board[row][col] % 2 == value % 2:
+                return False
+    return True
+
+def recurse(board, i, j):
+    if i == len(board):
         return True
+    if j == len(board[0]):
+        return recurse(board, i + 1, 0)
+    if board[i][j] != 0:
+        return recurse(board, i, j + 1)
+    for value in range(1, 2001):
+        if is_valid(board, i, j, value):
+            board[i][j] = value
+            if recurse(board, i, j + 1):
+                return True
+            board[i][j] = 0
+    return False
 
-    # Fill the board
-    for i in range(n):
-        for j in range(m):
-            if board[i][j] == 0:
-                possible_values = [val for val in range(1, n * m + 1) if is_valid_value(val, i, j)]
-                if not possible_values:
-                    return -1
-                board[i][j] = min(possible_values)
-
-    # Check the parity constraint for corner neighbors
-    for i in range(1, n):
-        for j in range(1, m):
-            if board[i][j] % 2 == board[i-1][j] % 2 and board[i][j] % 2 == board[i][j-1] % 2:
-                return -1
-
-    # Calculate the sum
+def solve_magic_checkerboard(n, m, board):
+    if n % 2 != 0 and m % 2 != 0:
+        return -1
+    if n % 2 != m % 2:
+        return -1
+    if not recurse(board, 0, 0):
+        return -1
     return sum(sum(row) for row in board)
 
-# Input
 n, m = map(int, input().split())
-board = []
-for _ in range(n):
-    row = list(map(int, input().split()))
-    board.append(row)
-
-# Fill the checkerboard and calculate the minimum sum
-min_sum = fill_magic_checkerboard(n, m, board)
-
-# Output
-print(min_sum)
+board = [list(map(int, input().split())) for _ in range(n)]
+print(solve_magic_checkerboard(n, m, board))
