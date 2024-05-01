@@ -30,6 +30,7 @@ def check_gaps(chosen, l):
             else:
                 grass[j] = True
 
+    print(grass)
     for i in range(0, l):
         if not grass[i]:
             return False
@@ -63,7 +64,7 @@ def solve(n, l, w):
             chosen.append(sprinklers[i])
             cursor = sprinklers[i][0] + sprinklers[i][1]
     
-    # print(chosen)
+    print(chosen)
     if cursor < l:
         print(-1)
     elif not check_gaps(chosen, l):
@@ -71,6 +72,6 @@ def solve(n, l, w):
     else:        
         print(len(chosen))
 
-for _ in range(3):
+for _ in range(1):
     n, l, w = map(int, input().split())
     solve(n, l, w)
