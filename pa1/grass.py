@@ -81,6 +81,9 @@ def solve(n, l, w):
     else:        
         print(len(chosen))
 
-for _ in range(3):
-    n, l, w = map(int, input().split())
-    solve(n, l, w)
+while True:
+    try:
+        n, l, w = map(int, input().split())
+        solve(n, l, w)
+    except EOFError:
+        exit(0)
