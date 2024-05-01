@@ -1,0 +1,64 @@
+# Python
+*.pyc
+__pycache__/
+venv/
+*.egg-info/
+dist/
+build/
+*.pyo
+*.pyd
+*.pyw
+*.pyz
+*.pyzw
+
+# C++
+*.o
+*.obj
+*.exe
+*.dll
+*.so
+*.dylib
+*.a
+*.lib
+*.pdb
+*.idb
+*.ilk
+*.sdf
+*.suo
+*.ncb
+*.dSYM/
+*.gcno
+*.gcda
+*.gch
+*.swp
+*.swo
+*.out
+# Python
+*.pyc
+__pycache__/
+venv/
+env/
+*.egg-info/
+dist/
+build/
+
+# C++
+*.o
+*.out
+*.exe
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
+
+# Visual Studio Code
+.vscode/
+.settings/
+
+# IntelliJ
+.idea/
+*.iml
+out/
