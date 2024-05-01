@@ -30,11 +30,19 @@ def check_gaps(chosen, l):
             else:
                 grass[j] = True
 
-    print(grass)
+    # print(grass)
     for i in range(0, l):
         if not grass[i]:
             return False
     
+    return True
+
+def check_overlap(chosen):
+    for i in range(len(chosen) - 1):
+        right = chosen[i][0] + chosen[i][1]
+        left = chosen[i + 1][0] - chosen[i + 1][1]
+        if right <= left:
+            return False
     return True
 
 def solve(n, l, w):
@@ -64,14 +72,15 @@ def solve(n, l, w):
             chosen.append(sprinklers[i])
             cursor = sprinklers[i][0] + sprinklers[i][1]
     
-    print(chosen)
+    # print(f"cursor: {cursor}")
+    # print(f"chosen: {chosen}")
     if cursor < l:
         print(-1)
-    elif not check_gaps(chosen, l):
+    elif not check_overlap(chosen):
         print(-1)
     else:        
         print(len(chosen))
 
-for _ in range(1):
+for _ in range(3):
     n, l, w = map(int, input().split())
     solve(n, l, w)
